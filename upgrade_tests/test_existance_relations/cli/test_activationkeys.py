@@ -18,7 +18,7 @@ associations post upgrade
 :Upstream: No
 """
 import pytest
-from upgrade_tests.helpers.existence import compare_postupgrade, pytest_ids
+from upgrade_tests.helpers.existence import compare_postupgrade, fail_if_missing, pytest_ids
 
 
 # Required Data
@@ -39,6 +39,7 @@ def test_positive_aks_by_content_view(pre, post):
 
     :expectedresults: CV of all AKs should be retained post upgrade
     """
+    fail_if_missing(pre, post)
     assert pre == post
 
 
@@ -50,6 +51,7 @@ def test_positive_aks_by_lc(pre, post):
 
     :expectedresults: LC of all AKs should be retained post upgrade
     """
+    fail_if_missing(pre, post)
     assert pre == post
 
 

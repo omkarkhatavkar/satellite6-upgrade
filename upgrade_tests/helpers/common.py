@@ -3,9 +3,6 @@
 import os
 import pytest
 
-cur_ver = os.environ.get('FROM_VERSION')
-
-
 class VersionException(Exception):
     """Version Exception if wrong satellite version provided"""
     pass
@@ -39,6 +36,7 @@ def run_to_upgrade(version):
     :return: If the version and FROM_VERSION doesnt matches then
         pytests skip test
     """
+    cur_ver = os.environ.get('FROM_VERSION')
     allowed_versions = ('6.0', '6.1', '6.2')
     if version not in allowed_versions:
         raise VersionException(

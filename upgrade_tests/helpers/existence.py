@@ -322,8 +322,9 @@ def compare_postupgrade(component, attribute):
                 else postupgrade_entity
             culprit_ver = ' in preupgrade version' if 'missing' \
                 in preupgrade_entity else ' in postupgrade version'
-            entity_values.append(
-                pytest.fail(culprit+culprit_ver))
+            #entity_values.append(
+            #    pytest.fail(culprit+culprit_ver))
+            entity_values.append((culprit, culprit_ver))
         else:
             entity_values.append((preupgrade_entity, postupgrade_entity))
     return entity_values
@@ -343,3 +344,16 @@ def pytest_ids(data):
             'Wrong data type is provided to generate pytest ids. '
             'Provide one of list/str.')
     return ids
+
+def fail_if_missing(entities):
+    """
+    """
+    rlist = []
+    for ent in entities:
+        pre, post = ent
+        if 'missing' in pre:
+            rvalue = pytest.param(pre, post, marks=pytest.mark.xfail(reason=pre+post))
+            rlist.append(rvalue)
+        else:
+            rlist.append(ent)
+    return rlist

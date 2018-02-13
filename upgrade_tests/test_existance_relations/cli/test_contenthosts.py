@@ -19,7 +19,7 @@ post upgrade
 """
 import pytest
 from robozilla.decorators import pytest_skip_if_bug_open
-from upgrade_tests.helpers.existence import compare_postupgrade, pytest_ids
+from upgrade_tests.helpers.existence import compare_postupgrade, fail_if_missing, pytest_ids
 
 # Required Data
 component = 'content-host'
@@ -37,6 +37,7 @@ def test_positive_contenthosts_by_name(pre, post):
     :expectedresults: All content hosts should be retained post upgrade by
         names
     """
+    fail_if_missing(pre, post)
     assert pre == post
 
 
